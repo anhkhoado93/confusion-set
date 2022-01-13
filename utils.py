@@ -1,5 +1,6 @@
 import os
 from typing import Callable, List, Dict
+from tqdm import tqdm
 
 TelexDict = Dict[str, str]
 
@@ -63,13 +64,11 @@ def load_vocab(path):
     vocab_list = []
     with open(path, "r") as vf:
         lines = vf.readlines()
-        print(f"Reading file...")
         for line in lines:
             word = line.strip()
             vocab_list.append(word)
         # remove_duplicate(vocab_list)
         nw = len(vocab_list)
-        print(f"Total {nw} word in vocab")
     return set(vocab_list)
 
 def decompose_to_telex(word):
@@ -139,7 +138,7 @@ def create_confusion_set(vocab: Dict[str, TelexDict],
        Python dictionary, { "word": ["confusion", "set"], ... }
     """
     confusion_set = dict.fromkeys(vocab.keys())
-    for word in confusion_set:
+    for word in tqdm(confusion_set):
         confusion_list = []
         for another_word in vocab:
             if word == another_word: continue
