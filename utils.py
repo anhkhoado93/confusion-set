@@ -123,6 +123,7 @@ def decompose_to_telex(word):
             word_composition["diact"] = diact
             word_composition["extra"] = extra
             return word_composition
+    word_composition["base"] = word
     return word_composition
         
 def create_confusion_set(vocab: Dict[str, TelexDict], 
@@ -167,7 +168,7 @@ def minimum_edit_distance(word: TelexDict, another: TelexDict, max_edit_distance
     edit_distance = DP5(base1, base2)
     if diact1 != diact2: edit_distance += 1
     if extra1 != extra2: edit_distance += 1
-    return edit_distance < max_edit_distance
+    return edit_distance <= max_edit_distance
 
 def DP5(s1, s2):
     if len(s1) > len(s2):
